@@ -94,13 +94,12 @@ if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColo
     set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
 
-
 % --- Executes on button press in pushbutton1.
 function pushbutton1_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-global imin   %定义一个全局变量im
+
 [filename,pathname]=...
     uigetfile({'*.*';'*.bmp';'*.jpg';'*.png'},'select picture');  %选择图片路径
 str=[pathname filename];  %合成路径+文件名
@@ -109,16 +108,34 @@ imin = rgb2gray(imin);
 imin = im2uint8(imin);
 axes(handles.axes2);  %使用第一个axes
 imshow(imin);  %显示图片
+handles.pic = imin;
+
 
 % --- Executes on button press in pushbutton3.
 function pushbutton3_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton3 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+%% 拐点
 x0 = 0; y0 = 0;
-x1 = 100;y1=20;
-x2 = 150;y2=200;
-x3 = 255;y3=255;
+x1 = 100;y1 = 20;
+x2 = 150;y2 = 200;
+x3 = 255;y3 = 255;
+
+%% 计算每段的斜率和偏执
+a1 = (y1 - y0) / (x1 - x0);
+b1 = 0;
+a2 = (y2 -y1) / (x2 - x1);
+b2 = y1 - a2 * x1;
+a3 = (y3 - y2) / (x3 - x2);
+b3 = y2 - a3 * x2;
+im = handles.pic;
+im(im >= x0 & im <= x1) = a1 * im(im >= x0 & im <= x1);
+im()
+
+
+
+%% 
 
 
 % --- Executes on button press in pushbutton4.

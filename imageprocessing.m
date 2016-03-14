@@ -94,21 +94,23 @@ if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColo
     set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
 
-
 % --- Executes on button press in pushbutton1.
 function pushbutton1_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-global imin   %定义一个全局变量im
+
 [filename,pathname]=...
     uigetfile({'*.*';'*.bmp';'*.jpg';'*.png'},'select picture');  %选择图片路径
 str=[pathname filename];  %合成路径+文件名
 imin=imread(str);   %读取图片
 imin = rgb2gray(imin);
 imin = im2uint8(imin);
-axes(handles.axes2);  %使用第一个axes
+axes(handles.axes2);  
 imshow(imin);  %显示图片
+handles.pic = imin;
+guidata(hObject,handles);
+
 
 % --- Executes on button press in pushbutton3.
 function pushbutton3_Callback(hObject, eventdata, handles)
@@ -121,20 +123,35 @@ x1 = 100;y1 = 20;
 x2 = 150;y2 = 200;
 x3 = 255;y3 = 255;
 
+%% 计算每段的斜率和偏执
+a1 = (y1 - y0) / (x1 - x0);
+b1 = 0;
+a2 = (y2 -y1) / (x2 - x1);
+b2 = y1 - a2 * x1;
+a3 = (y3 - y2) / (x3 - x2);
+b3 = y2 - a3 * x2;
+im = handles.pic;
+im(im >= x0 & im <= x1) = a1 * im(im >= x0 & im <= x1) + b1;
+im(im > x1 & im <= x2) = a2 * (im(im > x1 & im <= x2)) + b2;
+im(im > x2 & im <= x3) = a3 * (im(im > x2 & im <= x3)) + b3;
 
+axes(handles.axes3);  
+imshow(im);  %显示图片
+handles.pic = im;
+guidata(hObject,handles);
 
 % --- Executes on button press in pushbutton4.
 function pushbutton4_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton4 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-global inout  %定义处理后的图片BW这个全局变量
+imout = handles.pic;
 [filename,pathname,filterindex]=...
-    uiputfile({'*.bmp';'*.tif';'*.png'},'save picture');
+    uiputfile({'*.bmp';'*.jpg';'*.png'},'save picture');
 if filterindex==0
     return  %如果取消操作，返回
 else
     str=[pathname filename];  %合成路径+文件名
-    axes(handles.axes2);  %使用第二个axes
-    imwrite(inout,str);  %写入图片信息，即保存图片
+    axes(handles.axes3);  %使用第二个axes
+    imwrite(imout,str);  %写入图片信息，即保存图片
 end
