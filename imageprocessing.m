@@ -22,7 +22,7 @@ function varargout = imageprocessing(varargin)
 
 % Edit the above text to modify the response to help imageprocessing
 
-% Last Modified by GUIDE v2.5 14-Mar-2016 11:29:04
+% Last Modified by GUIDE v2.5 14-Mar-2016 13:17:58
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -81,6 +81,8 @@ function slider1_Callback(hObject, eventdata, handles)
 
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+
+
 
 
 % --- Executes during object creation, after setting all properties.
@@ -154,4 +156,37 @@ else
     str=[pathname filename];  %合成路径+文件名
     axes(handles.axes3);  %使用第二个axes
     imwrite(imout,str);  %写入图片信息，即保存图片
+end
+
+
+
+function slider_editText_Callback(hObject, eventdata, handles)
+% hObject    handle to slider_editText (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of slider_editText as text
+%        str2double(get(hObject,'String')) returns contents of slider_editText as a double
+sliderValue = get(handles.slider_editText,'String');
+sliderValue = str2double(sliderValue);
+if(isempty(sliderValue)||sliderValue<0||sliderValue>360)
+    set(handles.slider_editText,'String','0');
+else
+    im = rol(sliderValue);
+    axes(handles.axes2);  
+    imshow(im);  %显示图片
+end
+guidata(hObject,handles);
+
+
+% --- Executes during object creation, after setting all properties.
+function slider_editText_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to slider_editText (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
 end
