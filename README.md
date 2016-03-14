@@ -34,6 +34,7 @@ homework for Digital Image Processing
 表达式如下：
 
 ![](http://i.imgur.com/T1cweLy.png)
+
 核心代码实现：
 
 ![](http://i.imgur.com/GbIykLK.png)
@@ -41,9 +42,11 @@ homework for Digital Image Processing
 #### 旋转变换
 本质：构造旋转矩阵
 我构造的选择矩阵如下：
+
 ![](http://i.imgur.com/zhggfPa.png)
 
 图像经过变换后四个顶点的坐标：
+
 ![](http://i.imgur.com/7Ix6yfO.png)
 
 注意图像放在笛卡尔坐标系的第四象限， 其实不应该这么描述，按照图像处理里面的规定，图像的像素点矩阵是从上到下，从左到右排列。这样的摆放规定其实就是笛卡尔坐标系的第四象限，只不过$y$轴方向值为正。
