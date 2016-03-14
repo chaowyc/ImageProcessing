@@ -119,7 +119,7 @@ function pushbutton3_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton3 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-%% ¹Õµã
+%% ±ê¼Ç¹Õµã
 x0 = 0; y0 = 0;
 x1 = 100;y1 = 20;
 x2 = 150;y2 = 200;
@@ -133,6 +133,7 @@ b2 = y1 - a2 * x1;
 a3 = (y3 - y2) / (x3 - x2);
 b3 = y2 - a3 * x2;
 im = handles.pic;
+%% ÏñËØÖµÓ³Éä
 im(im >= x0 & im <= x1) = a1 * im(im >= x0 & im <= x1) + b1;
 im(im > x1 & im <= x2) = a2 * (im(im > x1 & im <= x2)) + b2;
 im(im > x2 & im <= x3) = a3 * (im(im > x2 & im <= x3)) + b3;

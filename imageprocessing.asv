@@ -81,11 +81,7 @@ function slider1_Callback(hObject, eventdata, handles)
 
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
-sliderValue = get(handles.slider1,'Value');
-im = rol(sliderValue);
-axes(handles.axes2);  
-imshow(im);  %ÏÔÊ¾Í¼Æ¬
-guidata(hObject,handles);
+
 
 
 
@@ -123,9 +119,9 @@ function pushbutton3_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton3 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-%% ¹Õµã
+%% ±ê¼Ç¹Õµã
 x0 = 0; y0 = 0;
-x1 = 100;y1 = 20;
+x1 = 50;y1 = 10;
 x2 = 150;y2 = 200;
 x3 = 255;y3 = 255;
 
@@ -137,6 +133,7 @@ b2 = y1 - a2 * x1;
 a3 = (y3 - y2) / (x3 - x2);
 b3 = y2 - a3 * x2;
 im = handles.pic;
+%% ÏñËØÖµÓ³Éä
 im(im >= x0 & im <= x1) = a1 * im(im >= x0 & im <= x1) + b1;
 im(im > x1 & im <= x2) = a2 * (im(im > x1 & im <= x2)) + b2;
 im(im > x2 & im <= x3) = a3 * (im(im > x2 & im <= x3)) + b3;
@@ -172,8 +169,15 @@ function slider_editText_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'String') returns contents of slider_editText as text
 %        str2double(get(hObject,'String')) returns contents of slider_editText as a double
 sliderValue = get(handles.slider_editText,'String');
-sliderValue = str2num(sliderValue);
-
+sliderValue = str2double(sliderValue);
+if(isempty(sliderValue)||sliderValue<0||sliderValue>360)
+    set(handles.slider_editText,'String','0');
+else
+    im = rol(sliderValue);
+    axes(handles.axes2);  
+    imshow(im);  %ÏÔÊ¾Í¼Æ¬
+end
+guidata(hObject,handles);
 
 
 % --- Executes during object creation, after setting all properties.
