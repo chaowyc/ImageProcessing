@@ -33,15 +33,7 @@ homework for Digital Image Processing
 [151, 255] -> [201-255]
 表达式如下：
 
-$$
-y = \left\{ 
-\begin{array}{c}
-a_1x \\ 
-a_2x+b_2 \\ 
-a_3x+b_3
-\end{array}
-\right.
-$$
+![](http://i.imgur.com/T1cweLy.png)
 核心代码实现：
 
 ![](http://i.imgur.com/GbIykLK.png)
@@ -49,22 +41,10 @@ $$
 #### 旋转变换
 本质：构造旋转矩阵
 我构造的选择矩阵如下：
-$$
-rot = 
-\begin{pmatrix}
-     \cos(\theta) & -\sin(\theta) & 0 \\
-     \sin(\theta) & \cos(\theta) & 0 \\
-     0 & 0 & 1\\
-\end{pmatrix}
-$$
+![](http://i.imgur.com/zhggfPa.png)
 
 图像经过变换后四个顶点的坐标：
-$$
-pix1 = [1, 1, 1] * rot \\
-pix2 = [1, w, 1] * rot \\
-pix3 = [h, 1, 1] * rot \\
-pix4 = [h, w, 1] * rot\\
-$$
+![](http://i.imgur.com/7Ix6yfO.png)
 
 注意图像放在笛卡尔坐标系的第四象限， 其实不应该这么描述，按照图像处理里面的规定，图像的像素点矩阵是从上到下，从左到右排列。这样的摆放规定其实就是笛卡尔坐标系的第四象限，只不过$y$轴方向值为正。
 
